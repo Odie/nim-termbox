@@ -1,7 +1,10 @@
-when defined(Linux):
-  const LibName = "libtermbox.so"
-else:
+when not defined(Linux) and not defined(macosx):
   {.error: "This platform has not been accounted for in the termbox wrapper.".}
+
+const LibName =
+  when defined(Linux): "libtermbox.so"
+  elif defined(macosx): "libtermbox.dylib"
+  else: null
 
 # --------------- keys ----------------
 # These are safe subset of terminfo keys, which exists on all popular terminals.
